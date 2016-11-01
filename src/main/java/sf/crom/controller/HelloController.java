@@ -1,6 +1,6 @@
 package sf.crom.controller;
 
-import javax.websocket.server.PathParam;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,17 +12,22 @@ import org.springframework.web.servlet.ModelAndView;
 public class HelloController {
 
 	@RequestMapping("/hello/{name}/{country}")
-	public ModelAndView sayHello(@PathVariable("name") String name, @PathVariable("country") String country) {
-		
+	public ModelAndView sayHello(@PathVariable("name") String name,
+			@PathVariable("country") String country) {
+
 		ModelAndView mav = new ModelAndView("HelloPage");
-		mav.addObject("welcomeMessage", "Hello World!!! "+name+" from "+country);
+		mav.addObject("welcomeMessage", "Hello World!!! " + name + " from "
+				+ country);
 		return mav;
 	}
 
-	@RequestMapping("/hi")
-	public ModelAndView sayHi(){
+	@RequestMapping("/hi/{name}/{country}")
+	public ModelAndView sayHi(
+			@PathVariable Map<String, String> pathVars) {
+
 		ModelAndView mav = new ModelAndView("HelloPage");
-		mav.addObject("welcomeMessage","Hi world!!!");
+		mav.addObject("welcomeMessage", "Hi world!!! " + pathVars.get("name")
+				+ " from" + pathVars.get("country"));
 		return mav;
 	}
 }
